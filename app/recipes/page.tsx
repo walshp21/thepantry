@@ -1,19 +1,25 @@
 import { db } from "@/lib/db";
 import RecipeList from "@/components/RecipeList";
+import PageHeader from "@/components/PageHeader";
 
 export const dynamic = "force-dynamic";
 
 export default async function RecipesPage() {
-  const recipes = await db.execute("SELECT * FROM recipes ORDER BY name");
-  const ingredients = await db.execute("SELECT * FROM recipe_ingredients");
-  const pantry = await db.execute("SELECT name, in_stock FROM pantry_items");
+  const [recipes, ingredients, pantry] = await Promise.all([
+    db.execute("SELECT * FROM recipes ORDER BY name"),
+    db.execute("SELECT * FROM recipe_ingredients"),
+    db.execute("SELECT name, in_stock FROM pantry_items"),
+  ]);
 
   const pantryMap: Record<string, number> = {};
   for (const row of pantry.rows) {
     pantryMap[(row.name as string).toLowerCase()] = row.in_stock as number;
   }
 
-  const ingredientsByRecipe: Record<number, { name: string; in_stock: boolean }[]> = {};
+  const ingredientsByRecipe: Record<
+    number,
+    { name: string; in_stock: boolean }[]
+  > = {};
   for (const row of ingredients.rows) {
     const rid = row.recipe_id as number;
     if (!ingredientsByRecipe[rid]) ingredientsByRecipe[rid] = [];
@@ -34,9 +40,7 @@ export default async function RecipesPage() {
 
   return (
     <div>
-      <header className="px-4 py-4 bg-white border-b border-gray-200">
-        <h1 className="text-xl font-bold">Recipes</h1>
-      </header>
+      <PageHeader title="Recipes" />
       <RecipeList initial={data} pantryNames={pantryNames} />
     </div>
   );
