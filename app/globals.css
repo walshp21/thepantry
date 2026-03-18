@@ -1,13 +1,35 @@
 @import "tailwindcss";
 
-* {
+*, *::before, *::after {
   box-sizing: border-box;
 }
 
+:root {
+  --bg: #f4ece0;
+  --surface: #ffffff;
+  --text: #1c1309;
+  --text-muted: #7a6a58;
+  --border: #e4d8c8;
+  --green: #2d6640;
+  --green-light: #e8f4ec;
+  --red: #bf3d2a;
+  --red-light: #fdecea;
+  --amber: #b8731a;
+  --tab-bg: #1b2b1f;
+  --tab-active: #e8c97a;
+  --input-bg: #ede4d8;
+  --shadow: 0 2px 12px rgba(28, 19, 9, 0.08);
+  --shadow-lg: 0 4px 24px rgba(28, 19, 9, 0.12);
+}
+
 body {
-  background: #f2f2f7;
-  color: #1c1c1e;
-  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI",
-    sans-serif;
+  background-color: var(--bg);
+  color: var(--text);
+  font-family: var(--font-sans), "DM Sans", sans-serif;
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1 {
+  font-family: var(--font-serif), "DM Serif Display", serif;
 }

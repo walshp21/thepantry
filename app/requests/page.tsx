@@ -1,5 +1,6 @@
 import { db } from "@/lib/db";
 import RequestList from "@/components/RequestList";
+import PageHeader from "@/components/PageHeader";
 
 export const dynamic = "force-dynamic";
 
@@ -17,9 +18,7 @@ export default async function RequestsPage() {
 
   return (
     <div>
-      <header className="px-4 py-4 bg-white border-b border-gray-200">
-        <h1 className="text-xl font-bold">Requests</h1>
-      </header>
+      <PageHeader title="Requests" />
       <RequestList initial={requests} />
     </div>
   );
